@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>이인원 — 자기소개</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --navy:     #003575;
+      --navy2:    #00256a;
+      --accent:   #0050a0;
+      --accent2:  #1a6fc4;
+      --text:     #1a1a2e;
+      --muted:    #5a6472;
+      --bg:       #f4f6fb;
+      --white:    #ffffff;
+      --surface:  #ffffff;
+      --border:   #dce2ee;
+      --line:     #0050a0;
+    }
+
+    /* ── 다크 모드 ── */
+    body.dark {
+      --navy:     #0a1829;
+      --navy2:    #071220;
+      --accent:   #3a7bd5;
+      --accent2:  #5096e0;
+      --text:     #d8e8f8;
+      --muted:    #7a9ab8;
+      --bg:       #0d1829;
+      --white:    #132035;
+      --surface:  #132035;
+      --border:   #1e3a5c;
+      --line:     #3a7bd5;
+    }
+
+    body, .card, .badge, .strength, .goal-box, .contact-item, header, nav, footer, .section-inner {
+      transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    }
+
+    /* ══════════════════════════════
+       상단 유틸리티 바 (DAPA 스타일)
+    ══════════════════════════════ */
+    .util-bar {
+      background: var(--navy2);
+      color: rgba(255,255,255,0.75);
+      font-size: 0.78rem;
+      padding: 5px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .util-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 6px;
+    }
+    .util-bar .sep { color: rgba(255,255,255,0.25); margin: 0 2px; }
+    .util-btn {
+      background: none;
+      border: 1px solid rgba(255,255,255,0.25);
+      color: rgba(255,255,255,0.8);
+      border-radius: 3px;
+      padding: 3px 10px;
+      font-size: 0.75rem;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .util-btn:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.5); }
+
+    /* ══════════════════════════════
+       헤더
+    ══════════════════════════════ */
+    header {
+      background: var(--navy);
+      color: #fff;
+      padding: 40px 0 36px;
+    }
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 48px;
+    }
+    .header-photo {
+      width: 140px; height: 176px;
+      border-radius: 6px; overflow: hidden;
+      border: 2px solid rgba(255,255,255,0.35);
+      flex-shrink: 0;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.35);
+    }
+    .header-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+    .header-text { flex: 1; }
+    .header-label {
+      font-size: 0.72rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 10px;
+    }
+    header h1 {
+      font-size: 2.4rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 6px;
+      line-height: 1.15;
+    }
+    header h1 span {
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: rgba(255,255,255,0.65);
+      margin-left: 10px;
+      letter-spacing: 1px;
+    }
+    header p.subtitle {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 7px; }
+    .tag {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: rgba(255,255,255,0.85);
+      border-radius: 3px;
+      padding: 3px 12px;
+      font-size: 0.78rem;
+    }
+
+    /* ══════════════════════════════
+       GNB 네비게이션 바
+    ══════════════════════════════ */
+    nav.gnb {
+      background: var(--white);
+      border-bottom: 2px solid var(--accent);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .gnb-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: stretch;
+    }
+    .gnb-inner a {
+      display: flex;
+      align-items: center;
+      padding: 13px 18px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+    .gnb-inner a:hover, .gnb-inner a.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+    body.dark nav.gnb { background: #0d1829; border-bottom-color: var(--accent); }
+    body.dark .gnb-inner a { color: #c8d8f0; }
+    body.dark .gnb-inner a:hover { color: var(--accent2); border-bottom-color: var(--accent2); }
+
+    /* ══════════════════════════════
+       메인 레이아웃
+    ══════════════════════════════ */
+    body { background: var(--bg); color: var(--text); font-family: 'Malgun Gothic', '맑은 고딕', 'Apple SD Gothic Neo', sans-serif; }
+    .page-wrap { max-width: 1100px; margin: 0 auto; padding: 40px 24px 64px; }
+
+    /* ══════════════════════════════
+       섹션 공통
+    ══════════════════════════════ */
+    .section-block { margin-bottom: 40px; }
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-head .bar {
+      width: 4px; height: 22px;
+      background: var(--accent);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .section-head h2 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.2px;
+    }
+    .section-head h2 small {
+      font-size: 0.78rem;
+      font-weight: 400;
+      color: var(--muted);
+      margin-left: 8px;
+    }
+
+    /* ══════════════════════════════
+       소개
+    ══════════════════════════════ */
+    .intro-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: 4px;
+      padding: 22px 24px;
+    }
+    .intro-box p {
+      font-size: 0.97rem;
+      line-height: 1.9;
+      color: var(--text);
+    }
+
+    /* ══════════════════════════════
+       경력 타임라인
+    ══════════════════════════════ */
+    .timeline { position: relative; padding-left: 24px; }
+    .timeline::before {
+      content: '';
+      position: absolute; left: 6px; top: 8px; bottom: 8px;
+      width: 2px; background: var(--border);
+    }
+    .tl-item { position: relative; margin-bottom: 20px; }
+    .tl-item::before {
+      content: '';
+      position: absolute; left: -20px; top: 18px;
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--accent); border: 2px solid var(--surface);
+      box-shadow: 0 0 0 2px var(--accent);
+    }
+    .tl-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 16px 20px;
+    }
+    .tl-card .year {
+      font-size: 0.76rem;
+      color: var(--accent);
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    .tl-card .role {
+      font-size: 0.97rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .tl-card .desc {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+    .tl-card.highlight { border-left: 3px solid var(--accent); }
+
+/* ══════════════════════════════
+       자격·수상 — 서비스 그리드
+    ══════════════════════════════ */
+    .badge-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+    .badge {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--accent);
+      border-radius: 4px;
+      padding: 18px 14px;
+      text-align: center;
+    }
+    .badge .icon { font-size: 1.5rem; margin-bottom: 8px; }
+    .badge .label { font-size: 0.84rem; font-weight: 700; color: var(--text); }
+    .badge .sub { font-size: 0.75rem; color: var(--muted); margin-top: 4px; }
+
+    /* ══════════════════════════════
+       강점 — 자주찾는메뉴 스타일
+    ══════════════════════════════ */
+    .strength-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    .strength {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 20px 18px;
+    }
+    .strength .s-icon { font-size: 1.3rem; margin-bottom: 8px; }
+    .strength .s-title { font-size: 0.92rem; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .strength .s-desc { font-size: 0.84rem; color: var(--muted); line-height: 1.6; }
+
+    /* ══════════════════════════════
+       목표 — 청장인사말 스타일
+    ══════════════════════════════ */
+    .goal-wrap {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .goal-sidebar {
+      background: var(--accent);
+      width: 8px;
+    }
+    .goal-body { padding: 22px 24px; }
+    .goal-body p {
+      font-size: 0.95rem;
+      color: var(--text);
+      line-height: 1.85;
+    }
+    .goal-body p + p { margin-top: 14px; }
+    .goal-body strong { color: var(--accent); }
+
+    /* ══════════════════════════════
+       연락처
+    ══════════════════════════════ */
+    .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+    .contact-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 14px 18px;
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .contact-item .c-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .contact-item .c-value { font-size: 0.92rem; color: var(--text); font-weight: 500; }
+
+    /* ══════════════════════════════
+       푸터
+    ══════════════════════════════ */
+    footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.6);
+      padding: 28px 0;
+      font-size: 0.8rem;
+      margin-top: 40px;
+    }
+    body.dark footer { background: #071220; }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .footer-inner .f-org { font-weight: 600; color: rgba(255,255,255,0.8); }
+    .footer-inner .f-contact span { margin-right: 16px; }
+
+    /* ══════════════════════════════
+       반응형
+    ══════════════════════════════ */
+    @media (max-width: 680px) {
+      .header-inner { flex-direction: column-reverse; align-items: flex-start; gap: 20px; }
+      .header-photo { width: 100px; height: 126px; }
+      header h1 { font-size: 1.75rem; }
+      header h1 span { display: block; margin-left: 0; margin-top: 4px; }
+      .gnb-inner { overflow-x: auto; }
+      .gnb-inner a { padding: 12px 12px; font-size: 0.8rem; }
+      .badge-grid { grid-template-columns: repeat(2, 1fr); }
+.page-wrap { padding: 24px 16px 48px; }
+      .goal-wrap { grid-template-columns: 1fr; }
+      .goal-sidebar { width: auto; height: 6px; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 상단 유틸리티 바 -->
+  <div class="util-bar">
+    <div class="util-inner">
+      <span style="color:rgba(255,255,255,0.4);font-size:0.72rem;" data-ko="대한민국 육군 / 방위사업청" data-en="ROK Army / DAPA">대한민국 육군 / 방위사업청</span>
+      <span class="sep">|</span>
+      <button class="util-btn" id="lang-toggle" onclick="toggleLang()">🌐 EN</button>
+      <button class="util-btn" id="dark-toggle" onclick="toggleDark()">🌙 다크</button>
+    </div>
+  </div>
+
+  <!-- 헤더 -->
+  <header>
+    <div class="header-inner">
+      <div class="header-photo">
+        <img src="이인원.png" alt="이인원 프로필 사진">
+      </div>
+      <div class="header-text">
+        <div class="header-label" data-ko="인사 프로필 · 방위사업 전문가" data-en="Personnel Profile · Defense Acquisition Specialist">인사 프로필 · 방위사업 전문가</div>
+        <h1>
+          <span data-ko="이인원" data-en="Lee Inwon">이인원</span>
+          <span data-ko="LEE INWON" data-en="이인원">LEE INWON</span>
+        </h1>
+        <p class="subtitle"
+           data-ko="대한민국 육군 군수 장교 · 방위력개선사업 사업관리 · 방위사업청 재직"
+           data-en="ROK Army Logistics Officer · Defense Acquisition Program Management · DAPA">
+          대한민국 육군 군수 장교 · 방위력개선사업 사업관리 · 방위사업청 재직
+        </p>
+        <div class="tags">
+          <span class="tag" data-ko="방위력개선사업" data-en="Defense Acquisition">방위력개선사업</span>
+          <span class="tag" data-ko="사업관리" data-en="Program Management">사업관리</span>
+          <span class="tag" data-ko="K-방산 수출" data-en="K-Defense Exports">K-방산 수출</span>
+          <span class="tag" data-ko="국제협력" data-en="International Cooperation">국제협력</span>
+          <span class="tag" data-ko="AI 융합" data-en="AI Integration">AI 융합</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- GNB 네비게이션 -->
+  <nav class="gnb">
+    <div class="gnb-inner">
+      <a href="#intro" data-ko="소개" data-en="About">소개</a>
+      <a href="#career" data-ko="주요 경력" data-en="Career">주요 경력</a>
+<a href="#qualifications" data-ko="자격·수상" data-en="Awards">자격·수상</a>
+      <a href="#strengths" data-ko="강점" data-en="Strengths">강점</a>
+      <a href="#goals" data-ko="목표" data-en="Goals">목표</a>
+      <a href="#contact" data-ko="연락처" data-en="Contact">연락처</a>
+    </div>
+  </nav>
+
+  <!-- 본문 -->
+  <div class="page-wrap">
+
+    <!-- 소개 -->
+    <div class="section-block" id="intro">
+      <div class="section-head">
+        <span class="bar"></span>
+        <h2 data-ko="소개" data-en="About">소개 <small data-ko="인사말" data-en="Introduction">인사말</small></h2>
+      </div>
+      <div class="intro-box">
+        <p data-ko="2005년 육군사관학교(무기공학 학사)에 입학해 2009년 임관한 군수 장교입니다. 야전에서 소대장·중대장으로 현장 리더십을 쌓은 뒤, 프랑스 파리2대학에서 방위산업 석사를 마치고 2016년부터 방위사업청에서 방위력개선사업 사업관리를 담당해 왔습니다. 늘 &quot;지금보다 더 나은 방법이 있지 않을까?&quot; 하고 생각하는 편이라, 틀에 박히지 않고 합리적인 방식을 찾는 것이 작은 즐거움이기도 합니다."
+           data-en="A logistics officer commissioned in 2009 after graduating from the Korea Military Academy (B.S. in Weapons Engineering). I built frontline leadership as a platoon and company commander, earned an M.A. in Defense Industry from Université Paris II, and have managed defense acquisition programs at DAPA since 2016. I thrive on finding smarter ways to do things — whether cutting costs, shortening timelines, or bridging military and industry.">
+          2005년 육군사관학교(무기공학 학사)에 입학해 2009년 임관한 군수 장교입니다.
+          야전에서 소대장·중대장으로 현장 리더십을 쌓은 뒤, 프랑스 파리2대학에서 방위산업 석사를 마치고
+          2016년부터 방위사업청에서 방위력개선사업 사업관리를 담당해 왔습니다.
+          늘 "지금보다 더 나은 방법이 있지 않을까?" 하고 생각하는 편이라,
+          틀에 박히지 않고 합리적인 방식을 찾는 것이 작은 즐거움이기도 합니다.
+        </p>
+      </div>
+    </div>
+
+    <!-- 주요 경력 -->
+    <div class="section-block" id="career">
+      <div class="section-head">
+        <span class="bar"></span>
+        <h2 data-ko="주요 경력" data-en="Career">주요 경력 <small data-ko="경력사항" data-en="Work History">경력사항</small></h2>
+      </div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-card">
+            <div class="year">2005 – 2009</div>
+            <div class="role" data-ko="육군사관학교 — 무기공학 학사 입학·임관" data-en="Korea Military Academy — B.S. Weapons Engineering">육군사관학교 — 무기공학 학사 입학·임관</div>
+            <div class="desc"
+                 data-ko="대한민국 육군사관학교에서 무기공학을 전공. 2009년 졸업 후 소위로 임관."
+                 data-en="Majored in Weapons Engineering at the Korea Military Academy. Commissioned as 2nd Lieutenant upon graduation in 2009.">
+              대한민국 육군사관학교에서 무기공학을 전공. 2009년 졸업 후 소위로 임관.
+            </div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-card">
+            <div class="year">2009 – 2016</div>
+            <div class="role" data-ko="야전부대 — 소대장 · 중대장" data-en="Field Unit — Platoon & Company Commander">야전부대 — 소대장 · 중대장</div>
+            <div class="desc"
+                 data-ko="야전 최전선에서 소대장·중대장으로 현장 리더십의 기초를 쌓았습니다. 재직 중 프랑스 파리2대학(방위산업 석사, 2014–2016) 유학."
+                 data-en="Built frontline leadership as platoon and company commander. Concurrently earned an M.A. in Defense Industry at Université Paris II (2014–2016).">
+              야전 최전선에서 소대장·중대장으로 현장 리더십의 기초를 쌓았습니다.
+              재직 중 프랑스 파리2대학(방위산업 석사, 2014–2016) 유학.
+            </div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-card">
+            <div class="year" data-ko="2016 – 현재" data-en="2016 – Present">2016 – 현재</div>
+            <div class="role" data-ko="방위사업청 — 방위력개선사업 사업관리" data-en="DAPA — Defense Acquisition Program Management">방위사업청 — 방위력개선사업 사업관리</div>
+            <div class="desc"
+                 data-ko="사업관리·계약·정책 등 방위력개선사업 전반 담당. 예산운영총괄 시절 신속집행 공로로 기재부장관 '국가경제발전 기여' 표창 수상."
+                 data-en="Managed programs across acquisition, contracting, and policy. Received the Minister of Economy and Finance Commendation for outstanding rapid budget execution.">
+              사업관리·계약·정책 등 방위력개선사업 전반 담당.
+              예산운영총괄 시절 신속집행 공로로 기재부장관 '국가경제발전 기여' 표창 수상.
+            </div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-card highlight">
+            <div class="year" data-ko="대표 성과" data-en="Key Achievement">대표 성과</div>
+            <div class="role" data-ko="다년 계약 방식 도입 — 공무원 제안 우수상" data-en="Multi-Year Contract Initiative — Civil Servant Proposal Award">다년 계약 방식 도입 — 공무원 제안 우수상</div>
+            <div class="desc"
+                 data-ko="반복 단기계약을 다년 계약으로 전환해 군의 물자 수령 기간 단축, 업체의 원가 절감, 정부의 국방예산 절약을 동시에 실현. 제도 개선의 대표 사례로 인정받음."
+                 data-en="Replaced repetitive short-term contracts with a multi-year model — cutting military delivery time, reducing industry costs, and saving defense budget simultaneously.">
+              반복 단기계약을 다년 계약으로 전환해 군의 물자 수령 기간 단축, 업체의 원가 절감,
+              정부의 국방예산 절약을 동시에 실현. 제도 개선의 대표 사례로 인정받음.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /page-wrap -->
+
+
+  <div class="page-wrap" style="padding-top:24px;">
+
+    <!-- 자격·수상 -->
+    <div class="section-block" id="qualifications">
+      <div class="section-head">
+        <span class="bar"></span>
+        <h2 data-ko="자격 · 수상" data-en="Education &amp; Awards">자격 · 수상 <small data-ko="학력 및 수상" data-en="Credentials &amp; Honors">학력 및 수상</small></h2>
+      </div>
+      <div class="badge-grid">
+        <div class="badge">
+          <div class="icon">🎓</div>
+          <div class="label" data-ko="육군사관학교 학사" data-en="KMA B.S.">육군사관학교 학사</div>
+          <div class="sub" data-ko="무기공학 · 2005–2009" data-en="Weapons Engineering · 2005–2009">무기공학 · 2005–2009</div>
+        </div>
+        <div class="badge">
+          <div class="icon">🇫🇷</div>
+          <div class="label" data-ko="파리2대학 석사" data-en="Université Paris II M.A.">파리2대학 석사</div>
+          <div class="sub" data-ko="방위산업 · 2014–2016" data-en="Defense Industry · 2014–2016">방위산업 · 2014–2016</div>
+        </div>
+        <div class="badge">
+          <div class="icon">🇺🇸</div>
+          <div class="label" data-ko="미 해군대학원 수료" data-en="NPS Certificate">미 해군대학원 수료</div>
+          <div class="sub" data-ko="국방획득협상 · 2022" data-en="Defense Acquisition Neg. · 2022">국방획득협상 · 2022</div>
+        </div>
+        <div class="badge">
+          <div class="icon">🏅</div>
+          <div class="label" data-ko="기재부장관 표창" data-en="Minister of Economy Commendation">기재부장관 표창</div>
+          <div class="sub" data-ko="국가경제발전 기여" data-en="National Economic Development">국가경제발전 기여</div>
+        </div>
+        <div class="badge">
+          <div class="icon">🏆</div>
+          <div class="label" data-ko="공무원 제안 우수상" data-en="Civil Servant Proposal Award">공무원 제안 우수상</div>
+          <div class="sub" data-ko="다년계약 방식 도입" data-en="Multi-Year Contract Initiative">다년계약 방식 도입</div>
+        </div>
+        <div class="badge">
+          <div class="icon">📋</div>
+          <div class="label" data-ko="국방사업관리사 3급" data-en="Defense PM Cert. Lv.3">국방사업관리사 3급</div>
+          <div class="sub" data-ko="방위사업 전문 자격" data-en="Defense Acquisition Specialist">방위사업 전문 자격</div>
+        </div>
+        <div class="badge">
+          <div class="icon">📊</div>
+          <div class="label" data-ko="국방원가분석사" data-en="Defense Cost Analyst">국방원가분석사</div>
+          <div class="sub" data-ko="원가 분석 전문 자격" data-en="Cost Analysis Certification">원가 분석 전문 자격</div>
+        </div>
+        <div class="badge">
+          <div class="icon">🌐</div>
+          <div class="label" data-ko="국제무역사 1급" data-en="Int'l Trade Specialist Lv.1">국제무역사 1급</div>
+          <div class="sub" data-ko="무역·통상 전문 자격" data-en="Trade &amp; Commerce Cert.">무역·통상 전문 자격</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 강점 -->
+    <div class="section-block" id="strengths">
+      <div class="section-head">
+        <span class="bar"></span>
+        <h2 data-ko="강점" data-en="Strengths">강점 <small data-ko="핵심 역량" data-en="Core Competencies">핵심 역량</small></h2>
+      </div>
+      <div class="strength-grid">
+        <div class="strength">
+          <div class="s-icon">🔍</div>
+          <div class="s-title" data-ko="창의적 문제해결" data-en="Creative Problem-Solving">창의적 문제해결</div>
+          <div class="s-desc" data-ko="기존 틀에서 벗어나 더 효율적이고 합리적인 방식을 끊임없이 탐색합니다." data-en="Always looking beyond the status quo for more efficient and rational approaches.">기존 틀에서 벗어나 더 효율적이고 합리적인 방식을 끊임없이 탐색합니다.</div>
+        </div>
+        <div class="strength">
+          <div class="s-icon">🤝</div>
+          <div class="s-title" data-ko="이해관계자 조율" data-en="Stakeholder Alignment">이해관계자 조율</div>
+          <div class="s-desc" data-ko="군·정부·업체 간 상충하는 이해를 조율하며 최선의 합의점을 찾아냅니다." data-en="Skilled at finding consensus across military, government, and industry interests.">군·정부·업체 간 상충하는 이해를 조율하며 최선의 합의점을 찾아냅니다.</div>
+        </div>
+        <div class="strength">
+          <div class="s-icon">💡</div>
+          <div class="s-title" data-ko="현장 중심 사고" data-en="Field-First Mindset">현장 중심 사고</div>
+          <div class="s-desc" data-ko="고객(군)의 만족도를 최우선에 두고, 제도보다 현장의 필요를 먼저 생각합니다." data-en="Customer (military) satisfaction comes first — field needs before bureaucratic procedures.">고객(군)의 만족도를 최우선에 두고, 제도보다 현장의 필요를 먼저 생각합니다.</div>
+        </div>
+        <div class="strength">
+          <div class="s-icon">🏃</div>
+          <div class="s-title" data-ko="자기주도적 성장" data-en="Self-Driven Growth">자기주도적 성장</div>
+          <div class="s-desc" data-ko="헬스와 달리기로 스스로를 단련하듯, 업무에서도 꾸준한 자기계발을 이어갑니다." data-en="The same discipline I bring to gym and running carries over to continuous professional development.">헬스와 달리기로 스스로를 단련하듯, 업무에서도 꾸준한 자기계발을 이어갑니다.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 관심사 & 목표 -->
+    <div class="section-block" id="goals">
+      <div class="section-head">
+        <span class="bar"></span>
+        <h2 data-ko="관심사 &amp; 앞으로의 목표" data-en="Interests &amp; Goals">관심사 &amp; 앞으로의 목표 <small data-ko="비전" data-en="Vision">비전</small></h2>
+      </div>
+      <div class="goal-wrap">
+        <div class="goal-sidebar"></div>
+        <div class="goal-body">
+          <p data-ko="최근에는 AI에 관심을 갖고 업무에 조금씩 접목해 보고 있습니다. 무기체계에도 AI가 적용되는 시대에 발맞추어 꾸준히 배워 나갈 계획입니다."
+             data-en="I have been exploring AI and gradually integrating it into my work. As AI becomes embedded in weapons systems, I am committed to staying ahead of the curve.">
+            최근에는 <strong>AI</strong>에 관심을 갖고 업무에 조금씩 접목해 보고 있습니다.
+            무기체계에도 AI가 적용되는 시대에 발맞추어 꾸준히 배워 나갈 계획입니다.
+          </p>
+          <p data-ko="앞으로는 방위사업청 국제협력 분야에서 금융지원·산업협력 등을 통해 K-방산 수출의 현장에서 우리 방산업체 곁의 든든한 조력자가 되고 싶습니다. 궁극적으로는 해외주재원으로 근무하며 수출 현장 최전선에서 기여하는 것이 목표입니다."
+             data-en="My goal is to support Korea's defense exports through DAPA's international cooperation channels — financial support, industrial cooperation, and beyond. Ultimately, I aspire to serve as an overseas attaché at the frontline of global defense markets.">
+            앞으로는 방위사업청 <strong>국제협력</strong> 분야에서 금융지원·산업협력 등을 통해
+            K-방산 수출의 현장에서 우리 방산업체 곁의 든든한 조력자가 되고 싶습니다.
+            궁극적으로는 <strong>해외주재원</strong>으로 근무하며 수출 현장 최전선에서 기여하는 것이 목표입니다.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 연락처 -->
+    <div class="section-block" id="contact">
+      <div class="section-head">
+        <span class="bar"></span>
+        <h2 data-ko="연락처" data-en="Contact">연락처 <small data-ko="Contact Information">Contact Information</small></h2>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-item">
+          <span class="c-label">Phone</span>
+          <span class="c-value">010-4767-5226</span>
+        </div>
+        <div class="contact-item">
+          <span class="c-label">Email</span>
+          <span class="c-value">soinsoin@korea.kr</span>
+        </div>
+        <div class="contact-item">
+          <span class="c-label" data-ko="소속" data-en="Organization">소속</span>
+          <span class="c-value" data-ko="대한민국 육군 / 방위사업청" data-en="ROK Army / DAPA">대한민국 육군 / 방위사업청</span>
+        </div>
+        <div class="contact-item">
+          <span class="c-label" data-ko="병과" data-en="Branch">병과</span>
+          <span class="c-value" data-ko="군수 · 획득 특기" data-en="Logistics · Acquisition">군수 · 획득 특기</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /page-wrap -->
+
+  <!-- 푸터 -->
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <span class="f-org" data-ko="이인원 · 대한민국 육군 / 방위사업청" data-en="Lee Inwon · ROK Army / DAPA">이인원 · 대한민국 육군 / 방위사업청</span>
+      </div>
+      <div class="f-contact">
+        <span>📞 010-4767-5226</span>
+        <span>✉ soinsoin@korea.kr</span>
+        <span style="color:rgba(255,255,255,0.35);">© 2026</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ── 언어 전환 ── */
+    let currentLang = localStorage.getItem('lang') || 'ko';
+
+    function applyLang(lang) {
+      document.querySelectorAll('[data-ko]').forEach(el => {
+        if (el.dataset.en) el.textContent = lang === 'en' ? el.dataset.en : el.dataset.ko;
+      });
+      const btn = document.getElementById('lang-toggle');
+      if (btn) btn.textContent = lang === 'en' ? '🌐 KO' : '🌐 EN';
+      document.documentElement.lang = lang === 'en' ? 'en' : 'ko';
+    }
+
+    function toggleLang() {
+      currentLang = currentLang === 'ko' ? 'en' : 'ko';
+      applyLang(currentLang);
+      localStorage.setItem('lang', currentLang);
+    }
+
+    /* ── 다크 모드 ── */
+    function toggleDark() {
+      const isDark = document.body.classList.toggle('dark');
+      const btn = document.getElementById('dark-toggle');
+      if (btn) btn.textContent = isDark ? '☀️ 라이트' : '🌙 다크';
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    }
+
+    /* ── 초기 설정 복원 ── */
+    if (localStorage.getItem('theme') === 'dark') {
+      document.body.classList.add('dark');
+      const btn = document.getElementById('dark-toggle');
+      if (btn) btn.textContent = '☀️ 라이트';
+    }
+    if (currentLang === 'en') applyLang('en');
+
+    /* ── GNB 활성 링크 ── */
+    const sections = document.querySelectorAll('[id]');
+    const navLinks = document.querySelectorAll('.gnb-inner a');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(a => {
+            a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id);
+          });
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+    sections.forEach(s => observer.observe(s));
+  </script>
+
+</body>
+</html>
